@@ -136,6 +136,16 @@ public class Delivery {
                 && this.getTotalCost() != null;
     }
 
+    private void changeStatusTo(DeliveryStatus newStatus) {
+        if (newStatus != null && this.getStatus().canNotChangeTo(newStatus)) {
+            throw new DomainException(
+                    "Invalid status transition from " + this.getStatus() +
+                            " to " + newStatus
+            );
+        }
+        this.setStatus(newStatus);
+    }
+
     @Getter
     @AllArgsConstructor
     @Builder
